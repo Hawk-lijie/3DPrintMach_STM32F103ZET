@@ -43,6 +43,7 @@ typedef struct
                                     ((PERIPH) == GPIOF) || \
                                     ((PERIPH) == GPIOG))
 
+#define assert_param(expr) ((expr) ? (void)0 : assert_failed((uint8_t *)__FILE__, __LINE__))
 
 void GPIO_SetBits(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
 {
