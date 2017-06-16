@@ -45,8 +45,35 @@ typedef struct
 
 #define assert_param(expr) ((expr) ? (void)0 : assert_failed((uint8_t *)__FILE__, __LINE__))
 
-void GPIO_SetBits(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
+#define RCC_APB2Periph_AFIO              ((uint32_t)0x00000001)
+#define RCC_APB2Periph_GPIOA             ((uint32_t)0x00000004)
+#define RCC_APB2Periph_GPIOB             ((uint32_t)0x00000008)
+#define RCC_APB2Periph_GPIOC             ((uint32_t)0x00000010)
+#define RCC_APB2Periph_GPIOD             ((uint32_t)0x00000020)
+#define RCC_APB2Periph_GPIOE             ((uint32_t)0x00000040)
+#define RCC_APB2Periph_GPIOF             ((uint32_t)0x00000080)
+#define RCC_APB2Periph_GPIOG             ((uint32_t)0x00000100)
+#define RCC_APB2Periph_ADC1              ((uint32_t)0x00000200)
+#define RCC_APB2Periph_ADC2              ((uint32_t)0x00000400)
+#define RCC_APB2Periph_TIM1              ((uint32_t)0x00000800)
+#define RCC_APB2Periph_SPI1              ((uint32_t)0x00001000)
+#define RCC_APB2Periph_TIM8              ((uint32_t)0x00002000)
+#define RCC_APB2Periph_USART1            ((uint32_t)0x00004000)
+#define RCC_APB2Periph_ADC3              ((uint32_t)0x00008000)
+#define RCC_APB2Periph_TIM15             ((uint32_t)0x00010000)
+#define RCC_APB2Periph_TIM16             ((uint32_t)0x00020000)
+#define RCC_APB2Periph_TIM17             ((uint32_t)0x00040000)
+#define RCC_APB2Periph_TIM9              ((uint32_t)0x00080000)
+#define RCC_APB2Periph_TIM10             ((uint32_t)0x00100000)
+#define RCC_APB2Periph_TIM11             ((uint32_t)0x00200000)
+
+#define IS_RCC_APB2_PERIPH(PERIPH) ((((PERIPH) & 0xFFC00002) == 0x00) && ((PERIPH) != 0x00))
+
+void GPIO_SetBits(uint32_t RCC_APB2Periph, GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
 {
+  /*Check the RCC parameters*/
+  assert_param(IS_RCC_APB2_PERIPH(RCC_APB2Periph));
+  
   /* Check the parameters */
   assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
   assert_param(IS_GPIO_PIN(GPIO_Pin));
